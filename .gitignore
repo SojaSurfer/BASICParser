@@ -1,0 +1,60 @@
+# OS-dependent
+.DS_Store
+
+# Byte-compiled Python files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# IPython & Jupyter
+profile_default/
+ipython_config.py
+.ipynb_checkpoints/
+
+# C extensions
+*.so
+
+# Build artefacts & distributions
+build/
+dist/
+develop-eggs/
+wheels/
+eggs/
+.eggs/
+*.egg-info/
+
+# temporary & log files
+~$*
+*.tmp
+temp/
+*.log
+pip-log.txt
+pip-delete-this-directory.txt
+
+# environments
+venv/
+.venv/
+env/
+ENV/
+
+# IDE settings
+# .vscode/
+.code-workspace
+.idea/
+.config/
+.thonny/
+
+# testing & coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
