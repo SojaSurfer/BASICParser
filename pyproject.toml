@@ -22,7 +22,6 @@ dependencies = [
 
 
 [tool.ruff]
-# which files/dirs to skip
 exclude = [
     "external/",
     "third_party/",
