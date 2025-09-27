@@ -1,0 +1,22 @@
+# Default: normalize text files with platform-specific EOL
+* text=auto
+
+# Ensure Markdown, JSON, YAML use LF
+*.md    text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+*.json  text eol=lf
+*.bas   text eol=lf
+
+# Force Unix endings for source code and shell scripts
+*.py     text eol=lf
+*.ipynb  text eol=lf
+*.sh     text eol=lf
+
+# Force Windows endings for Windows batch scripts
+*.bat  text eol=crlf
+*.cmd  text eol=crlf
+*.ps1  text eol=crlf
+
+# Treat binary files as binary (disable diff)
+*.exe    binary

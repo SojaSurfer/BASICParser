@@ -20,6 +20,12 @@ dependencies = [
     "pandas>=2.0<3.0",
 ]
 
+[project.optional-dependencies]
+dev = [
+    "mypy>=1.0",
+    "ruff>=0.1.0",
+    "pre-commit>=4.0",
+]
 
 [tool.ruff]
 exclude = [
@@ -80,6 +86,7 @@ ignore = [
     "D105",
     "D107",
     "D202",
+    "D203",
     "D205",
     "D417",
     "D413",

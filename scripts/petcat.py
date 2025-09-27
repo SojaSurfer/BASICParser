@@ -7,7 +7,7 @@ from pathlib import Path
 
 
 
-def extractD64Files(vice_bin_path:Path, d64_path:Path, extraction_dir:Path) -> None:
+def extract_d64_files(vice_bin_path:Path, d64_path:Path, extraction_dir:Path) -> None:
     """Extract all d64 files with c1541 from a source dir to a dest dir.
     
     Parameters
@@ -60,9 +60,9 @@ def convert_d64_files(vice_bin_path:Path, extraction_dir:Path) -> None:
     petcat_path = vice_bin_path / "petcat"
 
     for path, dirs, files in extraction_dir.walk():
-        for file in files:
-            file = Path(file)
-            if not (file.suffix or file == ".DS_Store"):
+        for f in files:
+            file = Path(f)
+            if not (file.suffix or file.stem == ".DS_Store"):
                 filepath = (path / file).resolve()
 
                 # conversion
@@ -89,7 +89,7 @@ if __name__ == "__main__":
     extraction_dir.mkdir(exist_ok=True)
 
 
-    extractD64Files(vice_bin_path, d64_path, extraction_dir)
+    extract_d64_files(vice_bin_path, d64_path, extraction_dir)
 
     convert_d64_files(vice_bin_path, extraction_dir)
 

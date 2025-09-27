@@ -1,8 +1,10 @@
 from collections import OrderedDict
 
+from scripts.typing import TagsetType
 
 
-TAGSET = OrderedDict({
+
+TAGSET: TagsetType = OrderedDict({
     "commands": {
         "arithmetic": {
             "tag": "CA",
@@ -156,7 +158,9 @@ TAGSET = OrderedDict({
         },
     },
     "data": {
-        "tag": "D",  # opcode-mnemonic table with DATA statement, like in assembler.bas line 10_000
-        "values": [None],
+        "data": {
+            "tag": "D",  # opcode-mnemonic table with DATA statement, like in assembler.bas line 10_000
+            "values": [None],
+    },
     },
 })

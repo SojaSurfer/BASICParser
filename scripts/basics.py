@@ -2,22 +2,24 @@ from pathlib import Path
 from typing import Any, Self
 
 import pandas as pd
-from petscii import ASCII_CODES
+
+from scripts.petscii import ASCII_CODES
 
 
 
 class BASICToken:
     """A class that represents one token in the Commodore BASIC programming language."""
 
-    def __init__(self, value: int, lineno: int, **kwargs) -> None:
+    def __init__(self, value: int, lineno: int, byte:bytes|None = None, byte_repr:str|None = None, token:str|None = None) -> None:
         self.value = value
         self.lineno = lineno
 
-        self._byte = kwargs.get("byte", bytearray([value]))
-        self.byte_repr: str = kwargs.get("byteRepr", f"0x{value:02x}")
-        self.syntax: str|None = kwargs.get("syntax")
-        self.token: str = kwargs.get("token", "")
-        self.language: str = kwargs.get("language", "BASIC")
+        self._byte = bytearray([value]) if byte is None else byte
+        self.byte_repr: str = f"0x{value:02x}" if byte_repr is None else byte_repr
+        self.token: str = "" if token is None else token
+
+        self.syntax: str = ""
+        self.language: str = "BASIC"
 
     @property
     def byte(self) -> bytes:
@@ -25,7 +27,7 @@ class BASICToken:
         return bytes(self._byte)
 
     def __str__(self) -> str:
-        return f"{self.__class__.__qualname__}({self.value}, {self.byte}, {self.byte_repr}, {self.token}, {self.syntax})"
+        return f"{self.__class__.__qualname__}({self.value}, {self.byte!r}, {self.byte_repr}, {self.token}, {self.syntax})"
 
     def __repr__(self) -> str:
         return f"{self.__class__.__qualname__}(value={self.value!r}, byte={self.byte!r}, byteRepr={self.byte_repr!r}, token={self.token!r}, syntax={self.syntax!r})"
@@ -41,7 +43,7 @@ class BASICToken:
         byte_repr = self.byte_repr + other.byte_repr
         token = self.token + " " + other.token
 
-        return self.__class__(value, self.lineno, byte=byte, byteRepr=byte_repr, token=token)
+        return self.__class__(value, self.lineno, byte=byte, byte_repr=byte_repr, token=token)
 
     def __iadd__(self, other: Self) -> Self:
         self._add_check_other(other)
@@ -125,7 +127,7 @@ class BASICFile:
 
             data.append(line)
 
-        with open(path, "w", encoding="utf-8") as file:
+        with Path(path).open("w", encoding="utf-8") as file:
             file.write("\n".join(data))
         return None
 

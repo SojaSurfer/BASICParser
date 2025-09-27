@@ -1,6 +1,8 @@
 import string
+from typing import Any
 
-from basics import BASICToken
+from scripts.basics import BASICToken
+from scripts.typing import TagsetType
 
 
 
@@ -15,29 +17,31 @@ ASCII_CODES = {
 }
 
 ASSEMBLY_CHARS = string.digits + ", "
+OptionalTokens = list[BASICToken] | None
+
 
 
 class Tagger:
+    """A tagger class."""
 
-    def __init__(self, tagset:dict) -> None:
+    def __init__(self, tagset:TagsetType) -> None:
         self.tagset = tagset
         self.asciiCodes = {char: key for key, value in ASCII_CODES.items() for char in value}
 
-        return None
-
     
-    def parse_print(self, btoken:BASICToken, decoded_tokens:list[BASICToken] = None) -> str:
+    def parse_print(self, btoken:BASICToken, decoded_tokens: OptionalTokens = None) -> str:
         return self.tagset["strings"]["print"]["tag"]
     
     
-    def parse_comment(self, btoken:BASICToken, decoded_tokens:list[BASICToken] = None) -> str:
+    def parse_comment(self, btoken:BASICToken, decoded_tokens: OptionalTokens = None) -> str:
         return self.tagset["strings"]["comment"]["tag"]
 
-    def parse_string(self, btoken:BASICToken, decoded_tokens:list[BASICToken] = None) -> str:
+
+    def parse_string(self, btoken:BASICToken, decoded_tokens: OptionalTokens = None) -> str:
         return self.tagset["strings"]["string"]["tag"]
     
 
-    def parse_ascii(self, btoken:BASICToken, decoded_tokens:list[BASICToken] = None) -> str:
+    def parse_ascii(self, btoken:BASICToken, decoded_tokens: OptionalTokens = None) -> str:
         ascii_type = self.asciiCodes.get(btoken.value, "unknown")
 
         match ascii_type:

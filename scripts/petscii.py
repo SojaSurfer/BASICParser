@@ -1,7 +1,6 @@
 """The script provides lookup tables for PETSCII bytes."""
 
 import string
-import sys
 
 
 

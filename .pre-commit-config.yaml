@@ -1,3 +1,10 @@
+## LOCAL USE ####################
+# commit the .pre-commit-config.yaml file
+# pip install pre-commit
+# pre-commit install
+# test the setup with pre-commit run --all-files
+
+
 repos:
   - repo: https://github.com/charliermarsh/ruff-pre-commit
     rev: v0.12.5  # Use the latest tagged version
@@ -11,6 +18,8 @@ repos:
     rev: v1.17.0  # use a pinned version of mypy
     hooks:
       - id: mypy
+        additional_dependencies: ['--no-binary=:all:']
         args: [
-          "--config-file=pyproject.toml"
+          "--config-file=pyproject.toml",
+          "--explicit-package-bases"
         ]
