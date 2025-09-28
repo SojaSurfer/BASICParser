@@ -5,12 +5,12 @@ import pandas as pd
 
 
 
-def show_file_diffs(file1: str|Path, file2: str|Path) -> None:
+def show_file_diffs(file1: str | Path, file2: str | Path) -> None:
     if isinstance(file1, str):
         file1 = Path(file1)
     if isinstance(file2, str):
         file2 = Path(file2)
-        
+
     with file1.open("r") as f:
         tokenized = [line.lower() for line in f.readlines()]
 
@@ -31,7 +31,7 @@ def show_file_diffs(file1: str|Path, file2: str|Path) -> None:
     return None
 
 
-def create_parquet(df: pd.DataFrame, table_path:Path) -> None:
+def create_parquet(df: pd.DataFrame, table_path: Path) -> None:
     metadata_df = pd.read_excel(
         "/Users/julian/Documents/3 - Bildung/31 - Studium/314 Universität Stuttgart/314.2 Semester 2/Projektarbeit/corpus/metadata.xlsx",
     )

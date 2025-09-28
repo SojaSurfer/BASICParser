@@ -31,9 +31,6 @@ PETSCII codec!
 """
 
 
-
-
-
 class Lexer:
     """A class to decode a Commodore BASIC binary file."""
 
@@ -41,7 +38,7 @@ class Lexer:
         self.tagger = Tagger(tagset)
         self.tagset = tagset
 
-        self.filename:Path
+        self.filename: Path
         self.asciiCodes = {char: key for key, value in ASCII_CODES.items() for char in value}
 
     def detokenize_basic_file(self, filename: str | Path) -> BASICFile:
@@ -61,7 +58,7 @@ class Lexer:
         elif not isinstance(filename, Path):
             msg = f"Expected 'filename' to be of type str or Path, found type {type(filename)}"
             raise TypeError(msg)
-        
+
         self.filename = filename
 
         bfile = BASICFile()
@@ -91,7 +88,6 @@ class Lexer:
 
         with self.filename.open("rb") as file:
             binary = file.read()
-        
 
         text = b""
         pos = 2  # skip header
@@ -125,7 +121,7 @@ class Lexer:
 
     def _lex_line(self, lineno: int, line: bytes) -> list[BASICToken]:
         hexbytes: list[int]
-        
+
         hexbytes = [line[0]] if len(line) == 1 else list(line)
 
         self.comment_cmd = False

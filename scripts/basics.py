@@ -10,7 +10,14 @@ from scripts.petscii import ASCII_CODES
 class BASICToken:
     """A class that represents one token in the Commodore BASIC programming language."""
 
-    def __init__(self, value: int, lineno: int, byte:bytes|None = None, byte_repr:str|None = None, token:str|None = None) -> None:
+    def __init__(
+        self,
+        value: int,
+        lineno: int,
+        byte: bytes | None = None,
+        byte_repr: str | None = None,
+        token: str | None = None,
+    ) -> None:
         self.value = value
         self.lineno = lineno
 
@@ -27,10 +34,17 @@ class BASICToken:
         return bytes(self._byte)
 
     def __str__(self) -> str:
-        return f"{self.__class__.__qualname__}({self.value}, {self.byte!r}, {self.byte_repr}, {self.token}, {self.syntax})"
+        representation = (
+            f"{self.__class__.__qualname__}({self.value}, {self.byte!r}, {self.byte_repr}, {self.token}, {self.syntax})"
+        )
+        return representation
 
     def __repr__(self) -> str:
-        return f"{self.__class__.__qualname__}(value={self.value!r}, byte={self.byte!r}, byteRepr={self.byte_repr!r}, token={self.token!r}, syntax={self.syntax!r})"
+        representation = (
+            f"{self.__class__.__qualname__}(value={self.value!r}, byte={self.byte!r}, "
+            f"byteRepr={self.byte_repr!r}, token={self.token!r}, syntax={self.syntax!r})"
+        )
+        return representation
 
     def __len__(self) -> int:
         return len(self.byte)
@@ -87,12 +101,11 @@ class BASICToken:
     def is_sigil(self) -> bool:
         """Check if token is an BASIC sigil."""
         return self.value in ASCII_CODES["sigil"]
-    
+
     def is_alpha(self) -> bool:
         if not self.token:
             return False
         return self.token[0].lower() in "abcdefghijklmnopqrstuvwxyz"
-        
 
 
 class BASICFile:
@@ -119,7 +132,7 @@ class BASICFile:
         self.file.append((lineno, tokens))
         return None
 
-    def save_file(self, path: str|Path) -> None:
+    def save_file(self, path: str | Path) -> None:
         """Save the BASIC file as an text file."""
         data = []
         for lineno, tokens in self.file:
@@ -131,7 +144,7 @@ class BASICFile:
             file.write("\n".join(data))
         return None
 
-    def save_table(self, path: str|Path) -> pd.DataFrame:
+    def save_table(self, path: str | Path) -> pd.DataFrame:
         """Save the BASIC file as an Excel file."""
 
         df = pd.DataFrame(columns=["line", "token_id", "bytes", "token", "syntax", "language"])
@@ -142,4 +155,3 @@ class BASICFile:
 
         df.to_excel(path)
         return df
-
