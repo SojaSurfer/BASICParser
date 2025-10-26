@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Literal
 
 import pandas as pd
 from tqdm import tqdm
@@ -8,7 +9,7 @@ from scripts.utils import show_file_diffs
 
 
 
-def main(source_path : Path, destination_path : Path, table_path : Path | None = None) -> None:
+def main(source_path : Path, destination_path : Path, table_path : Path | None = None, errors: Literal["replace", "raise"] = "raise") -> None:
     """Process a directory of C64 BASIC source files, decode each into a ASCII file, and optionally
     generate per-file token tables and a merged table.
 
@@ -30,7 +31,7 @@ def main(source_path : Path, destination_path : Path, table_path : Path | None =
     """
 
     df = pd.DataFrame()
-    parser = Parser()
+    parser = Parser(errors=errors)
     files = sorted(source_path.iterdir())
 
     # Iterate over all files in the source directory
@@ -66,4 +67,5 @@ if __name__ == "__main__":
     destination_path = examples_path / "decoded"
     table_path = examples_path / "tables"  # set to None to omit the Excel file creation
 
-    main(source_path, destination_path, table_path)
+    # for unknown bytes either raise an exception or replace them with a replacement character
+    main(source_path, destination_path, table_path, errors="replace")
