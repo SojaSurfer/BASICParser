@@ -58,3 +58,6 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 
+# decoded results
+*.bas
+*.xlsx

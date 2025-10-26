@@ -1,32 +1,44 @@
-import string
-from typing import Any
+import json
+from collections import OrderedDict
+from pathlib import Path
 
-from scripts.basics import BASICToken
-from scripts.typing import TagsetType
+from ._types import OptionalTokens, TagsetType
+from .basics import BASICToken
+from .petscii import ASCII_CODES
 
 
 
-sigils = "$%!"
-punctuations = [p for p in string.punctuation if p not in sigils]
+def load_tagset(filepath: str | Path) -> TagsetType:
+    """Load the tagset json file."""
 
-ASCII_CODES = {
-    "letter": [ord(char) for char in string.ascii_letters],
-    "number": [ord(char) for char in string.digits],
-    "sigil": [ord(char) for char in sigils],
-    "punctuation": [ord(char) for char in punctuations],
-}
+    if isinstance(filepath, str):
+        filepath = Path(filepath)
 
-ASSEMBLY_CHARS = string.digits + ", "
-OptionalTokens = list[BASICToken] | None
+    with filepath.open("r") as file:
+        tagset = json.load(file)
+
+    tagset = OrderedDict(tagset)
+    return tagset
+
 
 
 class Tagger:
-    """A tagger class."""
+    """A tagger class retrieving the corresponding tag from the tagset. Since the construction of
+    the tagset and the tagging rules are intertwined, it currently only supports the default
+    tagset (scripts/tagset.json).
+    """
 
-    def __init__(self, tagset: TagsetType) -> None:
-        self.tagset = tagset
+    def __init__(self) -> None:
+        self.tagset_path = Path(__file__).parent / "tagset.json"
+        self.tagset = load_tagset(self.tagset_path)
         self.asciiCodes = {char: key for key, value in ASCII_CODES.items() for char in value}
-
+    
+    def __str__(self) -> str:
+        return f"{self.__class__.__name__}(tagset_path={self.tagset_path!s})"
+    
+    def __repr__(self) -> str:
+        return f"{self.__class__.__qualname__}(tagset_path={self.tagset_path!r})"
+    
     def parse_print(self, btoken: BASICToken, decoded_tokens: OptionalTokens = None) -> str:
         return self.tagset["strings"]["print"]["tag"]
 
@@ -75,8 +87,9 @@ class Tagger:
             if btoken.token in tagging["values"]:
                 return tagging["tag"]
 
-        msg = f"can not parse command btoken of token {btoken.token}"
-        raise ValueError(msg)
+        return self.tagset["unknown"]["unknown"]["tag"]
+        # msg = f"can not parse command btoken of token {btoken.token}"
+        # raise ValueError(msg)
 
     def _parse_operator(self, btoken: BASICToken) -> str | None:
         if btoken.value in (0xAA, 0xAB, 0xAC, 0xAD, 0xAE):

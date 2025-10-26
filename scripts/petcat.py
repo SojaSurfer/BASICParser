@@ -1,6 +1,5 @@
 """The script extracts & converts d64 files into readable txt files using petcat."""
 
-import os
 import shutil
 import subprocess
 from pathlib import Path
@@ -13,11 +12,13 @@ def extract_d64_files(vice_bin_path: Path, d64_path: Path, extraction_dir: Path)
     Parameters
     ----------
         vice_bin_path: Path
-            The path to the bin directory of VICE (https://vice-emu.sourceforge.io/).
+            The path to the bin directory of `VICE`_.
         d64_path: Path
             The directory of the .d64 files.
         extraction_dir: Path
             The path where the c64 source code files should be stored. A subdirectory for each file is created.
+    
+    .. _VICE: https://vice-emu.sourceforge.io/
     """
 
     c1541_path = vice_bin_path / "c1541"
@@ -50,9 +51,11 @@ def convert_d64_files(vice_bin_path: Path, extraction_dir: Path) -> None:
     Parameters
     ----------
         vice_bin_path : Path
-            The path to the bin directory of VICE (https://vice-emu.sourceforge.io/).
+            The path to the bin directory of `VICE`_.
         extraction_dir : Path
             The path where the c64 source code files are stored.
+    
+    .. _VICE: https://vice-emu.sourceforge.io/
     """
 
     petcat_path = vice_bin_path / "petcat"
@@ -79,11 +82,12 @@ def convert_d64_files(vice_bin_path: Path, extraction_dir: Path) -> None:
 
 
 if __name__ == "__main__":
-    vice_bin_path = Path("/Applications/vice-arm64-gtk3-3.9/bin")
-    d64_path = Path("d64")
-    extraction_dir = Path("corpus")
-    extraction_dir.mkdir(exist_ok=True)
+    
+    vice_bin_path = Path("/Applications/vice-arm64-gtk3-3.9/bin")  # path in which the c1541 & petcat exe is stored
+    d64_path = Path("d64")  # path in which the .d64 files are
+    extraction_dir = Path("corpus")  # path for the output files
 
+    extraction_dir.mkdir(exist_ok=True)
     extract_d64_files(vice_bin_path, d64_path, extraction_dir)
 
     convert_d64_files(vice_bin_path, extraction_dir)

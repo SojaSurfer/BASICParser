@@ -4,6 +4,7 @@ import string
 
 
 
+## PETSCII command statements ########
 BYTE_TO_CMD = {
     b"\x80": "END",
     b"\x81": "FOR",
@@ -84,7 +85,8 @@ BYTE_TO_CMD = {
     b"\xff": "PI",
 }
 
-# control codes from <https://www.c64-wiki.com/wiki/control_character>
+## PETSCII control statements ########
+# <https://www.c64-wiki.com/wiki/control_character>
 BYTE_TO_CTRL = {
     b"\t": "{ensh}",  # very weird according to petcat, this is in level 5.bas, line 1284
     b"\n": "{$0a}",  # very weird according to petcat, this is in level 5.bas, line 1284
@@ -141,7 +143,7 @@ BYTE_TO_CTRL = {
     b"\x9e": "{yellow}",
     b"\x9f": "{cyan}",
     b"\x9c": "{purple}",
-    # what are those chars?
+
     b"\xa0": "{$a0}",
     b"\xa1": "{CBM-K}",
     b"\xa2": "{CBM-I}",
@@ -203,9 +205,10 @@ BYTE_TO_CTRL = {
     b"\xdb": "{SHIFT-+}",
     b"\xdd": "{SHIFT--}",
     b"\xdf": "{CBM-*}",
-    b"\xff": "~",  # according to petcat..
+    b"\xff": "~",
 }
 
+# Other
 sigils = "$%!"
 punctuations = [p for p in string.punctuation if p not in sigils]
 
@@ -215,6 +218,5 @@ ASCII_CODES = {
     "sigil": [ord(char) for char in sigils],
     "punctuation": [ord(char) for char in punctuations],
 }
-
 
 ASSEMBLY_CHARS = string.digits + ", "

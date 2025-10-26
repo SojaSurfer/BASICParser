@@ -1,32 +1,50 @@
+import string
 from pathlib import Path
-from typing import Any, Self
+from typing import Any, Literal, Self
 
 import pandas as pd
 
-from scripts.petscii import ASCII_CODES
+from .petscii import ASCII_CODES
 
 
 
 class BASICToken:
-    """A class that represents one token in the Commodore BASIC programming language."""
+    """A class that represents a token in the Commodore 64 BASIC programming language.
+    
+    Parameters
+    ----------
+        value : int
+            The integer value of the PETSCII encoded source byte.
+        lineno : int
+            The line number in whcih the token appears in the source file.
+        byte : bytes | None, optional
+            The PETSCII encoded source byte. Will be computed from the ``value``arg, if not provided.
+        byte_repr : str | None, optional
+            The PETSCII encoded source byte in string notation. This is used for better visualization of chunked
+            tokens (i.e. tokens consisting of multiple source bytes). Will be computed from the ``value``arg, if 
+            not provided.
+        token : str, optional
+            The source byte decoded to ASCII.
+    
+    Attributes
+    ----------
+        syntax : str
+            The syntax tag of the token.
+        language : str
+            The programming language of the token. Should be either "BASIC" or "ASSEMBLY".
+    """
 
-    def __init__(
-        self,
-        value: int,
-        lineno: int,
-        byte: bytes | None = None,
-        byte_repr: str | None = None,
-        token: str | None = None,
-    ) -> None:
+    def __init__(self, value: int, lineno: int, byte: bytes | None = None, byte_repr: str | None = None,
+                 token: str  = "") -> None:
+        
         self.value = value
         self.lineno = lineno
-
         self._byte = bytearray([value]) if byte is None else byte
         self.byte_repr: str = f"0x{value:02x}" if byte_repr is None else byte_repr
-        self.token: str = "" if token is None else token
+        self.token: str = token
 
         self.syntax: str = ""
-        self.language: str = "BASIC"
+        self.language: Literal["BASIC", "ASSEMBLY"] = "BASIC"
 
     @property
     def byte(self) -> bytes:
@@ -50,6 +68,13 @@ class BASICToken:
         return len(self.byte)
 
     def __add__(self, other: Self) -> Self:
+        """Adding two tokens together in the process of chunking.
+        
+        For some tokenized BASIC source bytes it is useful to chunk them together to create meaningful "NLP"-Tokens to analyse.
+        For example the token "<" followed by "=" defines the *less or equal* operator. It's the choice of this toolset to chunk
+        such tokens together leading to some resulting tokens represented in a multi-byte sequence instead of a single byte.
+        """
+
         self._add_check_other(other)
 
         value = self.value  # hmm..
@@ -60,6 +85,8 @@ class BASICToken:
         return self.__class__(value, self.lineno, byte=byte, byte_repr=byte_repr, token=token)
 
     def __iadd__(self, other: Self) -> Self:
+        """Adding two tokens together in the process of chunking."""
+
         self._add_check_other(other)
 
         self.value = other.value  # hmm..
@@ -105,11 +132,32 @@ class BASICToken:
     def is_alpha(self) -> bool:
         if not self.token:
             return False
-        return self.token[0].lower() in "abcdefghijklmnopqrstuvwxyz"
+        return self.token[0] in string.ascii_letters
+
 
 
 class BASICFile:
-    """A class that represents a Commodore BASIC file containing a dict with BASICToken elements."""
+    """Represent a Commodore BASIC program as a sequence of tokenized source lines.
+
+    This container stores BASIC code as an ordered list of lines. Each line is
+    represented as a tuple (lineno, tokens) where ``lineno`` is an integer line
+    number and ``tokens`` is a list of ``BASICToken`` instances that together form the
+    source text for that line.
+
+    Methods
+    -------
+        add_line()
+            Append a new line composed of the provided tokens at the given line number.
+
+        save_file()
+            Serialize the program to a UTF-8 text file. Each output line is formatted as:
+            "<lineno> <token1> <token2> ...".
+
+        save_table()
+            Create and write a pandas DataFrame with one row per token and columns
+            ["line", "token_id", "bytes", "token", "syntax", "language"]. Returns the
+            constructed DataFrame.
+    """
 
     def __init__(self) -> None:
         self.file: list[tuple[int, list[BASICToken]]] = []
@@ -117,20 +165,11 @@ class BASICFile:
     def __str__(self) -> str:
         return f"{self.__class__.__qualname__}()"
 
-    # def __getitem__(self, index) -> list[BASICToken]:
-    #     return self.file[index]
-
-    # def print_line(self, index: int = -1) -> None:
-    #     if index == -1:
-    #         index = max(self.file.keys())
-
-    #     token_line = " ".join([btoken.token for btoken in self.file[index]])
-    #     print(f"{index:>5d} {token_line}")
-    #     return None
 
     def add_line(self, tokens: list[BASICToken], lineno: int) -> None:
         self.file.append((lineno, tokens))
         return None
+
 
     def save_file(self, path: str | Path) -> None:
         """Save the BASIC file as an text file."""
@@ -143,6 +182,7 @@ class BASICFile:
         with Path(path).open("w", encoding="utf-8") as file:
             file.write("\n".join(data))
         return None
+
 
     def save_table(self, path: str | Path) -> pd.DataFrame:
         """Save the BASIC file as an Excel file."""
