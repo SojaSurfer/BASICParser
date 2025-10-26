@@ -3,6 +3,7 @@
 ![Python version](https://img.shields.io/badge/python-3.12%2B-blue)
 
 This repository contains scripts for decoding [Commodore 64 BASIC](https://en.wikipedia.org/wiki/Commodore_BASIC) source files and converting them into lexical tokens in ASCII format. The parser includes a syntax tagger that classifies tokens according to their functional properties in the BASIC language.
+The tagset used for classification is available in two formats: as a human-readable [markdown table](./tagset.md) and as a machine-readable [JSON file](./scripts/tagset.json).
 
 ## Features
 
@@ -23,7 +24,7 @@ This repository contains scripts for decoding [Commodore 64 BASIC](https://en.wi
 
 ### Example Use
 
-Run the parser with the [main.py](../blob/main/main.py) script to decode files in the `examples` directory:
+Run the parser with the [main.py](./main.py) script to decode files in the `examples` directory:
 
 ```bash
 python main.py

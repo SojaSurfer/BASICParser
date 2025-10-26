@@ -2,80 +2,86 @@
 
 ## 1 Commands
 
-| Tag   | Erklärung                         | Beispiel      |
+| Tag   | Description                       | Example       |
 | ----- |:---------------------------------:| -------------:|
-| CA    | arithmetische Commands            | ABS, SQR      |
-| CS    | String-basierte Commands          | ASC, LEFT$    |
-| CI    | I/O-basierte Commands             | CLOSE, INPUT  |
-| CV    | spezifische Variablendeklaration  | CLR, DATA     |
-| CD    | Funktionsdeklaration              | DEF           |
-| CC    | File-Run Control                  | RUN, STOP     |
-| CP    | Program Control                   | GOTO, FOR     |
-| CE    | Editor                            | LOAD, SAVE    |
-| CM    | Memory                            | NEW           |
-| CR    | System                            | PEEK, POKE    |
+| CA    | Arithmetic commands               | ABS, SQR      |
+| CS    | String-based commands             | ASC, LEFT$    |
+| CI    | I/O-based commands                | CLOSE, INPUT  |
+| CV    | Variable declaration commands     | CLR, DATA     |
+| CD    | Function declaration              | DEF           |
+| CC    | File-run control                  | RUN, STOP     |
+| CP    | Program control                   | GOTO, FOR     |
+| CE    | Editor commands                   | LOAD, SAVE    |
+| CM    | Memory commands                   | NEW           |
+| CR    | System commands                   | PEEK, POKE    |
 
-## 2 Operatoren
+## 2 Operators
 
-| Tag   | Erklärung                         | Beispiel      |
+| Tag   | Description                       | Example       |
 | ----- |:---------------------------------:| -------------:|
-| OA    | arithmetische Operatoren          | +, *          |
-| OR    | relationale Operatoren            | <=, =         |
-| OL    | logische Operatoren               | AND, OR       |
-| OS    | Zuweisungsoperator                | =             |
-| OU    | Unäre Operatoren                  | -, +          |
+| OA    | Arithmetic operators              | +, *          |
+| OR    | Relational operators              | <=, =         |
+| OL    | Logical operators                 | AND, OR       |
+| OS    | Assignment operator               | =             |
+| OU    | Unary operators                   | -, +          |
 
-## 3 Konstanten
+## 3 Constants
 
-| Tag   | Erklärung                         | Beispiel      |
+| Tag   | Description                       | Example       |
 | ----- |:---------------------------------:| -------------:|
-| TA    | arithmetische Konstanten          | PI            |
+| TA    | Arithmetic constants              | PI            |
 
-## 4 Systemvariablen
+## 4 System Variables
 
-| Tag   | Erklärung                         | Beispiel      |
+| Tag   | Description                       | Example       |
 | ----- |:---------------------------------:| -------------:|
-| YT    | Zeit-basierte Systemvariablen     | ti, ti$       |
-| YI    | I/O-basierte Systemvariablen      | st            |
+| YT    | Time-based system variables       | ti, ti$       |
+| YI    | I/O-based system variables        | st            |
 
-## 5 Variablen
+## 5 Variables
 
-| Tag   | Erklärung                         | Beispiel      |
+| Tag   | Description                       | Example       |
 | ----- |:---------------------------------:| -------------:|
-| VR    | Variable mit Type reele Zahl      | i, a          |
-| VI    | Variable mit Type integer Zahl    | i%, a%        |
-| VS    | Variable mit Type String          | s$, h$        |
-| VAR   | Variable mit reelen Zahlen Array  | i(4), a(7)    |
-| VAI   | Variable mit integer Zahlen Array | i%(4), a%(7)  |
-| VAS   | Variable mit String Array         | s$(4), a$(7)  |
+| VR    | Real number variable              | i, a          |
+| VI    | Integer variable                  | i%, a%        |
+| VS    | String variable                   | s$, h$        |
+| VAR   | Real number array variable        | i(4), a(7)    |
+| VAI   | Integer array variable            | i%(4), a%(7)  |
+| VAS   | String array variable             | s$(4), a$(7)  |
 
-## 6 Zahlen
+## 6 Numbers
 
-| Tag   | Erklärung                         | Beispiel      |
+| Tag   | Description                       | Example       |
 | ----- |:---------------------------------:| -------------:|
-| NR    | reele Zahl                        | 3.512, .7     |
-| NI    | integer Zahl                       | 3, 0         |
+| NR    | Real number                       | 3.512, .7     |
+| NI    | Integer number                    | 3, 0          |
 
 ## 7 Strings
 
-| Tag   | Erklärung                         | Beispiel      |
+| Tag   | Description                       | Example       |
 | ----- |:---------------------------------:| -------------:|
-| SC    | Kommentar                         | Copyright by  |
-| SL    | String                            | "Hallo"       |
+| SC    | Comment                           | Copyright by  |
+| SL    | String literal                    | "Hello"       |
 
-## 8 Interpunktion
+## 8 Punctuation
 
-| Tag   | Erklärung                         | Beispiel      |
+| Tag   | Description                       | Example       |
 | ----- |:---------------------------------:| -------------:|
-| PC    | Doppelpunkt, Statement Trenner    | :             |
-| PP    | Klammern                          | (, )          |
-| PT    | Variabeltyp, Sigil                | $, %          |
-| PB    | Punkt/Boolean                     | .             |
-| PS    | Separatoren                       | , ;           |
-| PO    | Andere Interpunktionen            | -, @, #       |
+| PC    | Colon, statement separator        | :             |
+| PP    | Parentheses                       | (, )          |
+| PT    | Variable type sigil               | $, %          |
+| PB    | Dot/Boolean                       | .             |
+| PS    | Separators                        | , ;           |
+| PO    | Other punctuation                 | -, @, #       |
 
 ## 9 Data
 
-| Tag   | Erklärung                         | Beispiel      |
+| Tag   | Description                       | Example       |
 | ----- |:---------------------------------:| -------------:|
-| D     | opcode-mnemonische Tabelle        | a,!,r         |
+| DD    | Opcode-mnemonic table            | a,!,r          |
+
+## 10 Unknown
+
+| Tag   | Description                       | Example       |
+| ----- |:---------------------------------:| -------------:|
+| UK    |Unknown characters                 | �             |
